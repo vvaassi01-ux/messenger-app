@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 
 const Home = () => {
+  const { user } = useAuth();
+
   return (
     <div className="w-full max-w-5xl mx-auto text-center space-y-16 py-12 px-4">
-      
+
       {/* Hero Section */}
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Security Badge */}
@@ -27,24 +30,26 @@ const Home = () => {
 
         {/* Primary Call to Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <Link 
-            to="/register" 
+          <Link
+            to={user ? "/messages" : "/register"}
             className="w-full sm:w-auto bg-gray-950 text-white font-semibold text-base rounded-xl px-8 py-3.5 hover:bg-gray-800 transition-colors cursor-pointer shadow-lg text-center"
           >
             Start Texting Safely
           </Link>
-          <Link 
-            to="/login" 
-            className="w-full sm:w-auto bg-white/90 backdrop-blur-md text-gray-900 border border-white/40 font-semibold text-base rounded-xl px-8 py-3.5 hover:bg-white transition-colors cursor-pointer shadow-lg text-center"
-          >
-            Sign In to Account
-          </Link>
+          {!user &&
+            <Link
+              to="/login"
+              className="w-full sm:w-auto bg-white/90 backdrop-blur-md text-gray-900 border border-white/40 font-semibold text-base rounded-xl px-8 py-3.5 hover:bg-white transition-colors cursor-pointer shadow-lg text-center"
+            >
+              Sign In to Account
+            </Link>
+          }
         </div>
       </div>
 
       {/* Feature Pillars Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-        
+
         {/* Feature 1 */}
         <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/20 text-left space-y-3">
           <div className="h-12 w-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl">

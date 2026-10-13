@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { handleLogin } from '../authentication/firebaseAuth';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+
+     await handleLogin(formData.email, formData.password);
+     console.log("login success");
+     
+     navigate("/");
+    }
+    catch (err: unknown) {
+      console.log("Login failed", err);
+    }
     // Your Firebase login logic goes here
     console.log("Logging in user data:", formData);
   };
@@ -21,7 +33,7 @@ const Login = () => {
   return (
     <div className="w-full max-w-md bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20">
       <form id="loginForm" onSubmit={handleSubmit} className="space-y-6">
-        
+
         {/* Header */}
         <div className="text-center pb-2">
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Welcome Back</h1>
@@ -33,14 +45,14 @@ const Login = () => {
           <label htmlFor="email" className="block text-sm font-semibold text-gray-800 text-left">
             Email Address
           </label>
-          <input 
-            className="w-full border border-solid border-gray-300 bg-white px-3 py-2.5 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:border-black focus:outline-none focus:ring-1 focus:ring-black transition-all" 
-            type="email" 
-            id="email" 
+          <input
+            className="w-full border border-solid border-gray-300 bg-white px-3 py-2.5 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:border-black focus:outline-none focus:ring-1 focus:ring-black transition-all"
+            type="email"
+            id="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Enter your email" 
-            required 
+            placeholder="Enter your email"
+            required
           />
         </div>
 
@@ -51,20 +63,20 @@ const Login = () => {
               Password
             </label>
           </div>
-          <input 
-            className="w-full border border-solid border-gray-300 bg-white px-3 py-2.5 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:border-black focus:outline-none focus:ring-1 focus:ring-black transition-all" 
-            type="password" 
-            id="password" 
+          <input
+            className="w-full border border-solid border-gray-300 bg-white px-3 py-2.5 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:border-black focus:outline-none focus:ring-1 focus:ring-black transition-all"
+            type="password"
+            id="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Enter your password" 
-            required 
+            placeholder="Enter your password"
+            required
           />
         </div>
 
         {/* Submit Button */}
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="w-full bg-black text-white font-semibold text-sm rounded-xl py-3 hover:bg-gray-800 transition-colors cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mt-2"
         >
           Login
