@@ -1,0 +1,38 @@
+import { BrowserRouter, Route, Routes } from 'react-router'
+import './App.css'
+import Home from './components/Home'
+import Register from './components/Register'
+import Login from './components/Login'
+import Header from './components/Header'
+import Footer from './components/Footer'
+
+function App() {
+
+  return (
+    <>
+  <BrowserRouter>
+    {/* Wrap everything in a full-screen flex column container */}
+    <div className="relative min-h-screen flex flex-col">
+      
+      <Header />
+      
+      {/* <main> should ONLY wrap your page content Routes */}
+      <main className="flex-1 pt-24 pb-20 flex items-center justify-center bg-gradient-to-br from-purple-600 to-green-500 px-4">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </main>
+      
+      {/* Move Footer down here, outside of the <main> tag */}
+      <Footer />
+      
+    </div>
+  </BrowserRouter>
+</>
+
+  )
+}
+
+export default App
