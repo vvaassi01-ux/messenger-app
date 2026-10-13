@@ -20,7 +20,14 @@ const Register = () => {
   const handleSubmit = async  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await handleSignUp(formData.email, formData.password);
+      await handleSignUp(
+        formData.email, 
+        formData.password, 
+        formData.firstName, 
+        formData.lastName, 
+        formData.username
+      );
+
       navigate("/");
     }
     catch (error: unknown) {
