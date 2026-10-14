@@ -140,12 +140,10 @@ const MessagesPage = () => {
 
   const activeRoomMeta = chatRoomsList.find(c => c.id === activeChatId);
   return (
-    <div className="w-full max-w-6xl mx-auto h-[80vh] bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 flex overflow-hidden">
+    <div className="w-full max-w-7xl mx-auto h-[80vh] bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 flex overflow-hidden">
 
-      {/* 📁 LEFT SIDEBAR PANEL */}
       <div className={`w-full md:w-80 border-r border-gray-100 flex flex-col ${isMobileChatOpen ? 'hidden md:flex' : 'flex'}`}>
 
-        {/* User Badge Profile Header */}
         <div className="p-4 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-full bg-gradient-to-br from-purple-600 to-green-500 text-white font-bold text-sm flex items-center justify-center shadow-xs">
@@ -167,7 +165,6 @@ const MessagesPage = () => {
           </button>
         </div>
 
-        {/* 💡 LIVE CHANNEL STREAM LIST */}
         <div className="flex-1 overflow-y-auto bg-gradient-to-br from-zinc-300 to-purple-200">
           {chatRoomsList.length === 0 ? (
             <div className="p-6 text-center text-xs text-gray-400 font-medium pt-12">
@@ -189,17 +186,14 @@ const MessagesPage = () => {
                     : 'bg-white'
                     }`}
                 >
-                  {/* Symmetrical Initial Avatar Profile Badge */}
                   <div className="relative shrink-0">
                     <div className={`h-11 w-11 rounded-full font-black text-xs flex items-center justify-center uppercase tracking-wider ${isActive ? 'bg-purple-600 text-white shadow-sm' : 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700 border border-gray-200/40'
                       }`}>
                       {room.displayName.charAt(1) || 'C'}
                     </div>
-                    {/* Glow point indicating a connected chat pipeline */}
                     <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white"></span>
                   </div>
 
-                  {/* Profile Text Metadata Track */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <h3 className={`text-sm tracking-tight truncate ${isActive ? 'font-black text-purple-950' : 'font-bold text-gray-900'}`}>
@@ -222,11 +216,8 @@ const MessagesPage = () => {
       <div className={`flex-1 flex flex-col bg-gray-50/30 ${!isMobileChatOpen ? 'hidden md:flex' : 'flex'}`}>
         {activeChatId ? (
           <>
-            {/* Active Thread Banner View bar */}
-            {/* Active Thread Banner header wrapper — ensure this container is set to "relative" */}
             <div className="p-4 border-b border-gray-100 bg-white flex items-center relative h-[69px]">
 
-              {/* 📱 BACK BUTTON (Stays on the far left) */}
               <button
                 type="button"
                 onClick={() => setIsMobileChatOpen(false)}
@@ -238,7 +229,6 @@ const MessagesPage = () => {
                 </svg>
               </button>
 
-              {/* 🎯 DEAD-CENTERED CHAT USER TEXT BLOCK */}
               <div className="flex flex-col items-center mx-auto text-center">
                 <h2 className="text-sm font-black text-gray-900 tracking-tight leading-none">
                   {activeRoomMeta?.displayName || 'Active Chat'}
@@ -248,14 +238,12 @@ const MessagesPage = () => {
                 </span>
               </div>
 
-              {/* 🖼️ ABSOLUTE HARD-ANCHORED AVATAR PHOTO: Locked to the far right edge */}
               <div className="absolute right-4 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-purple-100 text-purple-700 font-black text-xs flex items-center justify-center uppercase shrink-0 border border-purple-200/30 shadow-xs">
                 {activeRoomMeta?.displayName.charAt(1) || 'C'}
               </div>
 
             </div>
 
-            {/* Scrolling Messages Stream Block Layout */}
             <div ref={chatContainerRef}
               className="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col">
               {messages.map((msg) => {
@@ -272,7 +260,6 @@ const MessagesPage = () => {
               <div />
             </div>
 
-            {/* Form messaging submittal typing input area */}
             <form onSubmit={handleSendMessageSubmit} className="p-3 bg-white border-t border-gray-100 flex gap-2 items-center">
               <input
                 type="text"

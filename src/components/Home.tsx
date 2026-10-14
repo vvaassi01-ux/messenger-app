@@ -84,6 +84,12 @@ const Home = () => {
         </div>
 
       </div>
+      <Link
+            to={"/about"}
+            className="w-full sm:w-auto bg-gray-950 text-white font-semibold text-base rounded-xl px-8 py-3.5 hover:bg-gray-800 transition-colors cursor-pointer shadow-lg text-center"
+          >
+            Read About us
+          </Link>
 
     </div>
   );

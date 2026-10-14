@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import { AuthProvider } from './context/AuthProvider'
 import MessagesPage from './components/MessagesPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import AboutUs from './components/About'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/messages" element={<ProtectedRoute><MessagesPage /></ProtectedRoute>} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/about" element={<AboutUs />} />
                 <Route path="/register" element={<Register />} />
               </Routes>
             </main>
