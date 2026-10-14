@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { handleSignUp } from '../authentication/firebaseAuth';
+import type { FirebaseError } from 'firebase/app';
 
 const Register = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -17,23 +19,34 @@ const Register = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async  (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(null);
     try {
       await handleSignUp(
-        formData.email, 
-        formData.password, 
-        formData.firstName, 
-        formData.lastName, 
+        formData.email,
+        formData.password,
+        formData.firstName,
+        formData.lastName,
         formData.username
       );
 
       navigate("/");
     }
-    catch (error: unknown) {
-console.log("Error occurred trying to register", error);
+    catch (err) {
+      const firebaseError = err as FirebaseError;
+      console.log(firebaseError.code, "code");
 
-    }
+      if (firebaseError.code == "auth/invalid-email") {
+        setErrorMessage("Invalid email")
+      } else if (firebaseError.code == "auth/weak-password") {
+        setErrorMessage("This password is too weak")
+      } else if (firebaseError.code == "auth/too-many-requests") {
+        setErrorMessage("Too many requests. Please try again later");
+      } else if (firebaseError.code) {
+        setErrorMessage("Error trying to register")
+      };
+    };
   };
 
   return (
@@ -127,6 +140,7 @@ console.log("Error occurred trying to register", error);
             placeholder="••••••••"
             required
           />
+          <p className="text-center text-sm text-red-500">{errorMessage}</p>
         </div>
 
         {/* Submit Button */}

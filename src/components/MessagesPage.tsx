@@ -19,6 +19,15 @@ const MessagesPage = () => {
   const [messages, setMessages] = useState<MessagePayload[]>([]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleNewChatClick = () => {
+    setTimeout(() => {
+      searchInputRef.current?.focus();
+    }, 10)
+    // searchInputRef.current?.focus();
+  };
+
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -148,10 +157,13 @@ const MessagesPage = () => {
             </div>
           </div>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setIsModalOpen(true);
+              handleNewChatClick()
+            }}
             className="h-8 px-3 rounded-lg bg-black text-white text-xs font-semibold hover:bg-gray-800 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
           >
-            <span>➕</span> New
+            <span>➕</span> New Chat
           </button>
         </div>
 
@@ -172,10 +184,9 @@ const MessagesPage = () => {
                     setActiveChatId(room.id);
                     setIsMobileChatOpen(true);
                   }}
-                  className={`w-full p-4 flex items-center gap-3 text-left border-b border-gray-50/50 cursor-pointer hover:bg-gray-50/90 ${
-                    isActive
-                      ? 'bg-gray-200 border-l-3 border-solid border-purple-600 pl-3 shadow-inner hover:bg-gray-100/40'
-                      : 'bg-white'
+                  className={`w-full p-4 flex items-center gap-3 text-left border-b border-gray-50/50 cursor-pointer hover:bg-gray-50/90 ${isActive
+                    ? 'bg-gray-200 border-l-3 border-solid border-purple-600 pl-3 shadow-inner hover:bg-gray-100/40'
+                    : 'bg-white'
                     }`}
                 >
                   {/* Symmetrical Initial Avatar Profile Badge */}
@@ -284,7 +295,7 @@ const MessagesPage = () => {
         )}
       </div>
 
-      <NewChatModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onStartChat={handleCreateChatRoomTrigger} />
+      <NewChatModal ref={searchInputRef} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onStartChat={handleCreateChatRoomTrigger} />
     </div>
   );
 };

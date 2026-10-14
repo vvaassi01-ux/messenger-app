@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { handleLogin } from '../authentication/firebaseAuth';
+import { FirebaseError } from 'firebase/app';
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -16,18 +19,26 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(null);
     try {
+      await handleLogin(formData.email, formData.password);
+      console.log("login success");
 
-     await handleLogin(formData.email, formData.password);
-     console.log("login success");
-     
-     navigate("/");
+      navigate("/");
+      console.log("Logging in user data:", formData);
     }
-    catch (err: unknown) {
-      console.log("Login failed", err);
-    }
-    // Your Firebase login logic goes here
-    console.log("Logging in user data:", formData);
+    catch (err) {
+      const firebaseError = err as FirebaseError;
+      console.log(firebaseError.code);
+
+      if (firebaseError.code == "auth/invalid-credential") {
+        setErrorMessage("Wrong email or password");
+      } else if (firebaseError.code == "auth/too-many-requests") {
+        setErrorMessage("Too many requests. Please try again later");
+      } else if (firebaseError.code) {
+        setErrorMessage("Error logging in");
+      };
+    };
   };
 
   return (
@@ -72,6 +83,7 @@ const Login = () => {
             placeholder="Enter your password"
             required
           />
+          <p className="text-center text-sm text-red-500">{errorMessage}</p>
         </div>
 
         {/* Submit Button */}
