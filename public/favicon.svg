@@ -2,7 +2,6 @@
   <defs>
     <linearGradient id="tGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#9333ea" />
-      <stop offset="50%" stop-color="#0278ff96" />
       <stop offset="100%" stop-color="#10b981" />
     </linearGradient>
   </defs>
